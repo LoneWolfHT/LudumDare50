@@ -1,6 +1,6 @@
 extends Node
 
-var BASE_VOL = -30
+var BASE_VOL = -20
 
 var sounds = {}
 
