@@ -1,21 +1,230 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/Arena.png" type="Texture" id=2]
+[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/InsultMenu.gd" type="Script" id=4]
+[ext_resource path="res://assets/Preview.png" type="Texture" id=5]
+[ext_resource path="C:/Users/Lone Wolf/Projects/Godot/GodotGameBase/assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="C:/Users/Lone Wolf/Projects/Godot/GodotGameBase/assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://util/buttonpress.gd" type="Script" id=8]
+[ext_resource path="res://assets/audio/Developer/InevitableDeath.mp3" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/Developer/Death.mp3" type="AudioStream" id=10]
+[ext_resource path="res://util/customaudio.gd" type="Script" id=11]
+[ext_resource path="res://objects/MainMusic.tscn" type="PackedScene" id=12]
 
-[node name="Control" type="Control"]
+[sub_resource type="DynamicFont" id=12]
+size = 36
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 0.215686 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.152941, 0.152941, 0.152941, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.482353, 0, 0, 1 )
+border_width_top = 36
+border_color = Color( 1, 0.305882, 0.305882, 1 )
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id=3]
+ProgressBar/styles/bg = SubResource( 1 )
+ProgressBar/styles/fg = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 72
+use_filter = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 8, 16, 8 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 48
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=8]
+Panel/styles/panel = SubResource( 7 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 60
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 60
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0, 0, 0.67451 )
+
+[node name="MainMenu" type="Control"]
+show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-position = Vector2( 993, 513 )
-amount = 50
-lifetime = 2.0
-local_coords = false
-direction = Vector2( 0, 0 )
-spread = 180.0
-gravity = Vector2( 0, 0 )
-initial_velocity = 623.86
-initial_velocity_random = 1.0
-scale_amount = 19.35
-scale_amount_random = 0.16
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Background"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Background/StaticBody2D"]
+polygon = PoolVector2Array( 72, 120, 1848, 120, 1848, 1008, 72, 1008, 72, 0, 0, 0, 0, 1080, 1920, 1080, 1920, 0, 72, 0 )
+
+[node name="Label" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -48.0
+margin_right = 434.0
+margin_bottom = -4.0
+custom_fonts/font = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
+text = " Press [ESC] to pause "
+
+[node name="EnemyPos" type="Position2D" parent="."]
+position = Vector2( 1032, 192 )
+
+[node name="PlayerPos" type="Position2D" parent="."]
+position = Vector2( 936, 912 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 936, 720 )
+
+[node name="Progress" type="ProgressBar" parent="."]
+margin_left = 600.0
+margin_right = 1440.0
+margin_bottom = 48.0
+theme = SubResource( 3 )
+step = 1.0
+percent_visible = false
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PreInsultLabel" type="Button" parent="."]
+visible = false
+margin_left = 461.0
+margin_top = 432.0
+margin_right = 1512.0
+margin_bottom = 519.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Talk with an opponent..."
+script = ExtResource( 8 )
+
+[node name="InsultMenu" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Preview" type="TextureRect" parent="InsultMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -480.0
+margin_right = -320.0
+margin_bottom = 80.0
+rect_scale = Vector2( 6, 6 )
+texture = SubResource( 4 )
+expand = true
+
+[node name="Description" type="Label" parent="InsultMenu"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -36.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 5 )
+text = "blabla"
+align = 1
+
+[node name="Scroll" type="ScrollContainer" parent="InsultMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 576.0
+margin_right = 210.0
+margin_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.9, 0.9 )
+follow_focus = true
+scroll_horizontal_enabled = false
+
+[node name="OptionList" type="VBoxContainer" parent="InsultMenu/Scroll"]
+margin_right = 2130.0
+margin_bottom = 540.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 24
+
+[node name="HideTimer" type="Timer" parent="InsultMenu"]
+one_shot = true
+
+[node name="DevMenu" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 8 )
+
+[node name="Dev" type="AudioStreamPlayer" parent="DevMenu"]
+stream = ExtResource( 9 )
+volume_db = -6.0
+script = ExtResource( 11 )
+
+[node name="Play" type="Button" parent="DevMenu"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -240.0
+margin_top = -39.5
+margin_right = 240.0
+margin_bottom = 39.5
+custom_fonts/font = SubResource( 9 )
+text = "Play"
+script = ExtResource( 8 )
+
+[node name="DevDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -4.0
+script = ExtResource( 11 )
+
+[node name="VictoryLabel" type="Label" parent="."]
+margin_left = 178.0
+margin_top = 144.0
+margin_right = 1800.0
+margin_bottom = 293.0
+custom_colors/font_color = Color( 0.00674438, 0.863281, 0, 1 )
+custom_fonts/font = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+text = "Your inevitable death has been infinitely delayed.
+Thanks for playing!"
+align = 1
+
+[node name="MainMusic" parent="." instance=ExtResource( 12 )]
+autoplay = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="button_up" from="PreInsultLabel" to="InsultMenu" method="_on_PreInsultLabel_button_up"]
+[connection signal="timeout" from="InsultMenu/HideTimer" to="InsultMenu" method="_on_HideTimer_timeout"]
+[connection signal="finished" from="DevMenu/Dev" to="." method="_on_Dev_finished"]
+[connection signal="button_up" from="DevMenu/Play" to="." method="_on_Play_button_up"]

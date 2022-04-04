@@ -1,12 +1,20 @@
 extends Control
 
 export(Dictionary) var actions = {
-	#"jump"    : {"label": "Jump"   , "key": to_inputevent(KEY_SPACE)},
+	"move_up"    : {"label": "Move Up"    , "key": to_inputevent(KEY_W)},
+	"move_left"  : {"label": "Move Left"  , "key": to_inputevent(KEY_A)},
+	"move_down"  : {"label": "Move Down"  , "key": to_inputevent(KEY_S)},
+	"move_right" : {"label": "Move Right" , "key": to_inputevent(KEY_D)},
+	"attack"     : {"label": "Attack"     , "key": to_inputevent(KEY_J)},
+	"roll"       : {"label": "Roll"       , "key": to_inputevent(KEY_K)},
 }
 
 var ActionNode = preload("res://objects/KeyChangeEntry.tscn")
 
 func _ready():
+	show_on_top = true
+	pause_mode = PAUSE_MODE_PROCESS
+
 	$Panel/Scroll/KeyList.anchor_right = 1
 
 	if (!Settings.setting.keybinds.empty()):
@@ -41,3 +49,14 @@ func to_inputevent(x):
 	out.set_scancode(x)
 
 	return out
+
+func _on_Back_button_up():
+	self.visible = false
+
+func _on_AlwaysFaceEnemy_ready():
+	$Panel/Scroll/KeyList/AlwaysFaceEnemies/Button.text = (Settings.setting.always_face_enemy as String)
+
+func _on_AlwaysFaceEnemy_button_up():
+	Settings.setting.always_face_enemy = !Settings.setting.always_face_enemy
+	$Panel/Scroll/KeyList/AlwaysFaceEnemies/Button.text = (Settings.setting.always_face_enemy as String)
+	Settings.update()

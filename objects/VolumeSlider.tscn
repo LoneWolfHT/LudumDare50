@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objects/VolumeSlider.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
@@ -34,20 +34,24 @@ size = 30
 use_filter = true
 font_data = ExtResource( 2 )
 
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 0.333333 )
+
 [node name="VolumeSlider" type="VScrollBar"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -22.0
-margin_top = -229.5
-margin_right = 22.0
-margin_bottom = 229.5
+margin_left = 22.0
+margin_top = 232.0
+margin_right = 66.0
+margin_bottom = 691.0
+rect_rotation = 180.0
 custom_styles/grabber_highlight = SubResource( 2 )
 custom_styles/grabber = SubResource( 1 )
 custom_styles/grabber_pressed = SubResource( 1 )
-min_value = -50.0
-max_value = 50.0
+min_value = -20.0
+max_value = 20.0
 step = 1.0
 custom_step = 5.0
 script = ExtResource( 1 )
@@ -57,12 +61,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -220.0
-margin_top = -277.5
-margin_right = 220.0
-margin_bottom = -228.5
+margin_left = 119.0
+margin_top = 278.5
+margin_right = 359.0
+margin_bottom = 315.5
+rect_rotation = -180.0
 custom_fonts/font = SubResource( 3 )
-text = "Volume: 9999999db (panic)"
+custom_styles/normal = SubResource( 4 )
+text = "Volume: 99db"
 align = 1
 valign = 2
 

@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://objects/DifficultySlider.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.411765, 0.419608, 0.470588, 1 )
+border_width_left = 3
+border_width_top = 15
+border_width_right = 3
+border_width_bottom = 15
+border_color = Color( 0.439216, 0.447059, 0.556863, 1 )
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.372549, 0.380392, 0.423529, 1 )
+border_width_left = 3
+border_width_top = 15
+border_width_right = 3
+border_width_bottom = 15
+border_color = Color( 0.341176, 0.341176, 0.411765, 1 )
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 0.333333 )
+
+[node name="DifficultySlider" type="VScrollBar"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 23.0
+margin_top = 226.0
+margin_right = 67.0
+margin_bottom = 685.0
+rect_rotation = 180.0
+custom_styles/grabber_highlight = SubResource( 2 )
+custom_styles/grabber = SubResource( 1 )
+custom_styles/grabber_pressed = SubResource( 1 )
+min_value = 0.1
+max_value = 2.0
+step = 0.1
+value = 1.0
+allow_greater = true
+custom_step = 5.0
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 130.0
+margin_top = 278.5
+margin_right = 388.0
+margin_bottom = 315.5
+rect_rotation = -180.0
+custom_fonts/font = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Difficulty: x4.2"
+align = 1
+valign = 2
+
+[connection signal="value_changed" from="." to="." method="_on_VolumeSlider_value_changed"]

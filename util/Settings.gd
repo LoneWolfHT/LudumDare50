@@ -5,7 +5,9 @@ export var setting = {
 	"window_maximized"  : true,
 	"window_dimensions" : OS.window_size,
 	"window_position"   : OS.window_position,
-	"keybinds"          : {}
+	"keybinds"          : {},
+	"always_face_enemy" : false,
+	"difficulty"        : 1
 }
 
 const FILEPATH = "user://settings.json"

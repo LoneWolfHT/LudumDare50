@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://objects/PlayerAnim.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://objects/Player.gd" type="Script" id=2]
+[ext_resource path="res://objects/Sword.tscn" type="PackedScene" id=3]
+[ext_resource path="C:/Users/Lone Wolf/Projects/Godot/GodotGameBase/assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://util/buttonpress.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 48.0
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.913725, 0, 0, 1 )
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0.823529, 0.0901961, 1 )
+corner_detail = 1
+
+[sub_resource type="Theme" id=13]
+ProgressBar/styles/bg = SubResource( 14 )
+ProgressBar/styles/fg = SubResource( 15 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 36
+use_filter = true
+font_data = ExtResource( 4 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sword" parent="." instance=ExtResource( 3 )]
+
+[node name="Blood" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+speed_scale = 1.4
+explosiveness = 0.83
+lifetime_randomness = 1.0
+fract_delta = false
+local_coords = false
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 165.14
+scale_amount = 12.0
+color = Color( 0.478431, 0.141176, 0.141176, 1 )
+hue_variation = 0.13
+hue_variation_random = 0.45
+
+[node name="Anim" type="AnimatedSprite" parent="."]
+position = Vector2( -1.90735e-06, 1.90735e-06 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 1 )
+animation = "roll"
+frame = 4
+playing = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = -3.14159
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 5 )
+
+[node name="RollTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Health" type="ProgressBar" parent="."]
+margin_left = -60.0
+margin_top = -6.0
+margin_right = 60.0
+margin_bottom = 8.0
+theme = SubResource( 13 )
+value = 100.0
+percent_visible = false
+
+[node name="HealthTimer" type="Timer" parent="Health"]
+wait_time = 2.0
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="RestartButton" type="Button" parent="."]
+visible = false
+margin_left = -144.0
+margin_top = -24.0
+margin_right = 144.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 16 )
+text = "Restart Game"
+script = ExtResource( 5 )
+load_scene = "res://scenes/MainMenu.tscn"
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="timeout" from="RollTimer" to="." method="_on_RollTimer_timeout"]
+[connection signal="value_changed" from="Health" to="." method="_on_Health_value_changed"]
+[connection signal="timeout" from="Health/HealthTimer" to="." method="_on_HealthTimer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

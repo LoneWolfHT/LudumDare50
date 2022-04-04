@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://objects/EnemyAnim.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://objects/Sword.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Enemy.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 48.0
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 48.0
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.913725, 0, 0, 1 )
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0.823529, 0.0901961, 1 )
+corner_detail = 1
+
+[sub_resource type="Theme" id=16]
+ProgressBar/styles/bg = SubResource( 14 )
+ProgressBar/styles/fg = SubResource( 15 )
+
+[node name="Enemy" type="KinematicBody2D"]
+script = ExtResource( 3 )
+ROLL_COOLDOWN = 0.5
+
+[node name="Sword" parent="." instance=ExtResource( 2 )]
+
+[node name="Blood" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+speed_scale = 1.4
+explosiveness = 0.83
+lifetime_randomness = 1.0
+fract_delta = false
+local_coords = false
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 165.14
+scale_amount = 12.0
+color = Color( 0.529412, 0, 0.368627, 1 )
+hue_variation = 0.13
+hue_variation_random = 0.45
+
+[node name="Anim" type="AnimatedSprite" parent="."]
+show_behind_parent = true
+position = Vector2( -3.8147e-06, 0 )
+scale = Vector2( 12.5, 12 )
+frames = ExtResource( 1 )
+animation = "roll"
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = -3.14159
+shape = SubResource( 13 )
+
+[node name="Danger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Danger"]
+rotation = -3.14159
+shape = SubResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 11 )
+
+[node name="RollTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Health" type="ProgressBar" parent="."]
+margin_left = -60.0
+margin_top = -6.0
+margin_right = 60.0
+margin_bottom = 8.0
+theme = SubResource( 16 )
+value = 100.0
+percent_visible = false
+
+[node name="HealthTimer" type="Timer" parent="Health"]
+wait_time = 2.0
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="Danger" to="." method="_on_Danger_area_entered"]
+[connection signal="area_exited" from="Danger" to="." method="_on_Danger_area_exited"]
+[connection signal="timeout" from="RollTimer" to="." method="_on_RollTimer_timeout"]
+[connection signal="value_changed" from="Health" to="." method="_on_Health_value_changed"]
+[connection signal="timeout" from="Health/HealthTimer" to="." method="_on_HealthTimer_timeout"]

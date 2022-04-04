@@ -1,0 +1,280 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="C:/Users/Lone Wolf/Projects/Godot/GodotGameBase/assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/Arena.png" type="Texture" id=2]
+[ext_resource path="res://objects/DeveloperAnim.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://objects/EnemyAnim.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://objects/PlayerAnim.tres" type="SpriteFrames" id=5]
+[ext_resource path="C:/Users/Lone Wolf/Projects/Godot/GodotGameBase/assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/audio/Developer/intro.mp3" type="AudioStream" id=7]
+[ext_resource path="res://scenes/Intro.gd" type="Script" id=8]
+[ext_resource path="res://objects/VolumeSlider.tscn" type="PackedScene" id=9]
+[ext_resource path="res://util/buttonpress.gd" type="Script" id=10]
+[ext_resource path="res://assets/audio/HelpMenu.mp3" type="AudioStream" id=11]
+[ext_resource path="res://assets/audio/Teleport.wav" type="AudioStream" id=12]
+[ext_resource path="res://util/customaudio.gd" type="Script" id=13]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Main"
+length = 83.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Developer:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6.4, 7.3, 7.5, 11, 13.2, 15.3, 15.7, 21.2, 21.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 90.0, 180.0, 180.0, 80.0, 80.0, 180.0, 180.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Tutorial:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 25.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Developer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 7.7, 15.6, 16.3, 19.6, 21 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1044, 490 ), Vector2( 1044, 490 ), Vector2( 1044, 490 ), Vector2( 1044, 580 ), Vector2( 1044, 580 ), Vector2( 1044, 400 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Developer/CPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 23.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Developer:frames")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1, 23.4, 23.401, 23.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 3 ), ExtResource( 3 ), null ]
+}
+tracks/5/type = "audio"
+tracks/5/path = NodePath("AudioStreamPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 7 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("Tutorial/AudioStreamPlayer")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 11 )
+} ],
+"times": PoolRealArray( 25.8 )
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 23.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_teleport"
+} ]
+}
+
+[sub_resource type="DynamicFont" id=2]
+use_filter = true
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 48
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="Intro" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Main = SubResource( 1 )
+
+[node name="Background" type="TextureRect" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Background"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Background/StaticBody2D"]
+polygon = PoolVector2Array( 72, 120, 1848, 120, 1848, 1008, 72, 1008, 72, 0, 0, 0, 0, 1080, 1920, 1080, 1920, 0, 72, 0 )
+
+[node name="InactiveEnemy" type="AnimatedSprite" parent="."]
+position = Vector2( 984, 264 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 4 )
+animation = "stand"
+playing = true
+
+[node name="InactiveEnemy2" type="AnimatedSprite" parent="."]
+position = Vector2( 840, 264 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 4 )
+animation = "stand"
+playing = true
+
+[node name="InactiveEnemy3" type="AnimatedSprite" parent="."]
+position = Vector2( 1248, 264 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 4 )
+animation = "stand"
+playing = true
+
+[node name="InactiveEnemy4" type="AnimatedSprite" parent="."]
+position = Vector2( 1104, 264 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 4 )
+animation = "stand"
+playing = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -4.0
+script = ExtResource( 13 )
+
+[node name="Developer" type="AnimatedSprite" parent="."]
+position = Vector2( 1044, 490 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 3 )
+animation = "stand"
+playing = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Developer"]
+position = Vector2( 0, 0.666668 )
+scale = Vector2( 0.0833333, 0.0833333 )
+emitting = false
+amount = 32
+one_shot = true
+speed_scale = 1.3
+explosiveness = 0.5
+lifetime_randomness = 0.28
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 258.06
+angular_velocity = -108.39
+angular_velocity_random = 1.0
+scale_amount = 19.0
+scale_amount_random = 0.76
+color = Color( 0.231373, 0.231373, 0.231373, 1 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Developer"]
+stream = ExtResource( 12 )
+volume_db = -10.0
+script = ExtResource( 13 )
+
+[node name="Player" type="AnimatedSprite" parent="."]
+position = Vector2( 1044, 696 )
+scale = Vector2( 12, 12 )
+frames = ExtResource( 5 )
+animation = "stand"
+playing = true
+
+[node name="Listener2D" type="Listener2D" parent="Player"]
+position = Vector2( 0, -9.75 )
+current = true
+
+[node name="VolumeSlider" parent="." instance=ExtResource( 9 )]
+margin_left = 1719.0
+margin_top = 974.0
+margin_right = 1763.0
+margin_bottom = 1433.0
+
+[node name="Tutorial" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Tutorial"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = 24.0
+margin_right = -24.0
+margin_bottom = -24.0
+custom_fonts/bold_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 3 )
+text = "Hello there! I am the half of your brain you never use.
+
+That was very rude of the developer, he has no respect for the time you're putting into this, but you may be able to play after all...
+
+These gladiators aren't exactly the disciplined soldier type. If you can figure out what to say you may be able to enrage them into fighting you, make sure you say the correct thing though, or their mood will change, and so will the correct thing to say
+
+If you do successfully anger one of them you will need to be ready to fight:
+	- You can attack with your sword (duh)
+	- You can dodge attacks with a short roll. While you are rolling you can't take any damage.
+
+Check out the keybinds menu to see what keys do what.
+
+I'll make sure you pick out a weak opponent first, so you can practice"
+
+[node name="Button" type="Button" parent="Tutorial"]
+margin_left = 765.0
+margin_top = 945.0
+margin_right = 1249.0
+margin_bottom = 1009.0
+custom_fonts/font = SubResource( 4 )
+text = "Try to play game"
+script = ExtResource( 10 )
+load_scene = "res://scenes/MainMenu.tscn"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Tutorial"]
+stream = ExtResource( 11 )
+script = ExtResource( 13 )

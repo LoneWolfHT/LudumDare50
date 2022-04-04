@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/fonts/xolonium-fonts-4.1/ttf/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://objects/KeyChangeEntry.gd" type="Script" id=2]
+[ext_resource path="res://util/buttonpress.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -35,5 +36,6 @@ mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 2 )
 toggle_mode = true
 text = "Button"
+script = ExtResource( 3 )
 
 [connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
