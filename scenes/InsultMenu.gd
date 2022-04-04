@@ -25,8 +25,11 @@ signal done
 
 var reset = false
 
+var rng = RandomNumberGenerator.new()
 func _ready():
 	self.visible = false
+
+	rng.randomize()
 
 	if (self.connect("start", get_parent(), "_on_InsultMenu_show") != OK):
 		push_error("[InsultMenu] Failed to connect to main menu")
@@ -47,9 +50,6 @@ func start():
 	get_parent().get_node("PreInsultLabel").visible = true
 
 func show():
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-
 	$Preview.texture.region.position.y = 0
 
 	var selected_trigger = triggerlist[rng.randi_range(0, triggerlist.size()-1)]
